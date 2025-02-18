@@ -22,7 +22,7 @@ features:
       主要使用的开发架构是:Vue.js, React.js, Next.js, Nuxt.js, Angular, ReactNative Electron Solid Svelte
       Taro UniApp等客户端开发开发。
       当前于字节跳动，北京前端团队，目前主要做前端开发
-    link: /docs/frontend/vue.md
+    link: /docs/frontend/html.md
   - title: Python-后端
     details: Django Flask FastApi DjangoRestFramework Sanic 都是目前使用 python 的最先接触的开发架构，
       准确来说，我最先接触的就是 Python ，然后才是前端，所以说我的 Python 功底可能比前端功底还要好很多呐
