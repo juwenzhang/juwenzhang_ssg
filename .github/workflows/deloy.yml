@@ -48,7 +48,7 @@ jobs:
           npm run docs:build
       - name: create .nojekyll
         run: |
-          mkdir docs/.vitepress/dist/
+          mkdir -p docs/.vitepress/dist/
           touch docs/.vitepress/dist/.nojekyll
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
