@@ -11,8 +11,8 @@ hero:
     border-radius: 50%
   actions:
     - theme: brand
-      text: 文档集合
-      link: /markdown-examples
+      text: 个人项目合集
+      link: /personal_project
     - theme: alt
       text: vitePress 配置文档
       link: /vitePress 配置文档
