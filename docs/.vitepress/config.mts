@@ -46,7 +46,7 @@ export default defineConfig({
           { text: "webpack", link: '/frontend/webpack' },
           { text: "rollup", link: '/frontend/rollup' },
           { text: "nodejs", link: '/frontend/nodejs' },
-          { text: "demo", link: '/frontend/demo' }
+          { text: "deno", link: '/frontend/deno' }
         ]
       },
 
@@ -115,8 +115,26 @@ export default defineConfig({
     ],
 
     sidebar: {
-      '/frontend/html': [
+      '/frontend/': [
         { text: 'HTML', link: '/frontend/html' },
+        { text: "CSS", link: '/frontend/css' },
+        { text: "JavaScript", link: '/frontend/javascript' },
+        { text: "TypeScript", link: '/frontend/typescript' },
+        { text: "React", link: '/frontend/react' },
+        { text: "Vue", link: '/frontend/vue' },
+        { text: "Solid", link: '/frontend/solid' },
+        { text: "Svelte", link: '/frontend/svelte' },
+        { text: "Angular", link: '/frontend/angular' },
+        { text: "Interview", link: '/frontend/interview' },
+        { text: "VisibleEnd", link: '/frontend/visibleEnd' },
+        { text: "Next", link: '/frontend/next' },
+        { text: "Nuxt", link: '/frontend/nuxt' },
+        { text: "Nestjs", link: '/frontend/nestjs' },
+        { text: "Vite", link: '/frontend/vite' },
+        { text: "Webpack", link: '/frontend/webpack' },
+        { text: "Rollup", link: '/frontend/rollup' },
+        { text: "Nodejs", link: '/frontend/nodejs' },
+        { text: "Deno", link: '/frontend/deno' }
       ],
       '/java/backend/': [
 
