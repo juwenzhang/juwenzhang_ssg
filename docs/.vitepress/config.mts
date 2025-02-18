@@ -19,6 +19,13 @@ export default defineConfig({
             'CSS, ' +
             'JavaScript'
       }
+    ],
+    [
+      "link",
+      {
+        rel: 'icon',
+        href: '/img.jpg'
+      }
     ]
   ],
   themeConfig: {
