@@ -137,3 +137,11 @@
   --docsearch-primary-color: var(--vp-c-brand-1) !important;
 }
 
+img {
+  border-radius: 50%;
+  transition: transform .5s ease;
+}
+img:hover {
+  transform: scale(1.3);
+}
+

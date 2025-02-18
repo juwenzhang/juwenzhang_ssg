@@ -7,7 +7,7 @@ export default defineConfig({
   title: "JuWenZhang",
   description: "JuWenZhang_Static_Site",
   appearance: 'dark',
-  outDir: "docs/.vitepress/dist/",
+  outDir: "doc/docs/.vitepress/dist/",
   head: [
     [
       'meta',
@@ -159,7 +159,7 @@ export default defineConfig({
     ],
 
     search: {
-      provider: 'algolia',
+      provider: 'local',
       options: {
         translations: {
           button: {

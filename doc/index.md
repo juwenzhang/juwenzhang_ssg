@@ -35,29 +35,3 @@ features:
       计划的是下一段实习去国内的更多的优秀团队工作吧，比如说 @拼多多 @得物 @美团 @淘宝 @京东... 这些类似的优秀的团队吧，
       当然我最希望的就是能在字节跳动留下来就留下来，因为内部团队的风格我是十分的喜爱的
 ---
-
----
-# https://vitepress.dev/reference/default-theme-home-page
-layout: home
-
-hero:
-  name: "JuWenZhang"
-  text: "JuWenZhang"
-  tagline: My great project tagline
-  actions:
-    - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
-    - theme: alt
-      text: API Examples
-      link: /api-examples
-
-features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
----
-
