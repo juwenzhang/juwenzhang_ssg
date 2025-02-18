@@ -7,7 +7,7 @@ export default defineConfig({
   title: "JuWenZhang",
   description: "JuWenZhang_Static_Site",
   appearance: 'dark',
-  outDir: "doc/docs/.vitepress/dist/",
+  outDir: "docs/.vitepress/dist/",
   head: [
     [
       'meta',
