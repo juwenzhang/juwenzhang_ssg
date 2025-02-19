@@ -47,6 +47,28 @@
 
 ---
 ## 个人项目二
+* 在实现完成上面的个人项目二的时候，也是发布了自己的第一个 npm demo 包吧
+  * 在 npm 官网上也是可以实现查询得到的呐
+  * 主要是对于前端的 webpack 配置的一个 demo 包吧
+  * 讲述了工程化开发中主要配置的 webpack 有那些内容吧
+    * 分别配置了关于我们的 
+      * 上线环境的 webpack 配置 release
+      * 测试环境的 webpack 配置 test
+      * 开发环境的 webpack 配置 dev
+
+---
+## 个人项目三
+* 发布了自己的第一个工具包
+  * 内部的工具含有我们的
+    * 前端防抖工具的开发
+    * 前端节流工具的开发
+    * 前端事件循环工具的开发
+    * 前端事件分发工具的开发
+  * juwenzhang_utils 任然是在我们的 npm 上面的呐
+    * 本来的话是想命名为 jzh_utils 的，但是这个名字被占用了，就感觉十分的难受吧
+
+---
+## 个人项目四
 * byte_react_airbnb
   * 主要使用的技术栈是我们的: 
     * react + javascript + react_router + antd + less + 
@@ -65,5 +87,10 @@
     * 开创了多个分支的开发模式吧
     * 同时也使用了 github-actions 的持续化部署功能
     * 真真体会到了现在的分工开发的经验吧
+  * 在开发中使用了自动化部署吧
+    * 但是最初不是使用的是我们的 github-actions
+    * 最初使用的是我们的 nginx + jenkins 来实现的我们的自动化部署
+      * 同时 nginx 和 jenkins 也是当前公司中使用得最多的持续化集成和持续化部署的方案吧
+      * 所以说就直接也跟着学习了，也进行了自己的实践吧，还是有很大的收获的呐
   * 项目地址: https://juwenzhang.github.io/byte_react_airbnb
    
