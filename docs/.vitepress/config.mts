@@ -8,26 +8,7 @@ export default defineConfig({
   description: "JuWenZhang_Static_Site",
   appearance: 'dark',
   outDir: "docs/.vitepress/dist/",
-  head: [
-    [
-      'meta',
-      {
-        name:
-            'keywords',
-        content:
-            'HTML, ' +
-            'CSS, ' +
-            'JavaScript'
-      }
-    ],
-    [
-      "link",
-      {
-        rel: 'icon',
-        href: '/img.jpg'
-      }
-    ]
-  ],
+  head: [["link", {rel: 'icon', href: '/img.jpg'}]],
   themeConfig: {
     logo: "/img.jpg",
     nav: [
