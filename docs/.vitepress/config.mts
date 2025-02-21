@@ -25,7 +25,6 @@ export default defineConfig({
           { text: "solid", link: '/frontend/solid' },
           { text: "svelte", link: '/frontend/svelte' },
           { text: "angular", link: '/frontend/angular' },
-          { text: "interview", link: '/frontend/interview' },
           { text: "visibleEnd", link: '/frontend/visibleEnd' },
           { text: "next", link: '/frontend/next' },
           { text: "nuxt", link: '/frontend/nuxt' },
@@ -34,7 +33,8 @@ export default defineConfig({
           { text: "webpack", link: '/frontend/webpack' },
           { text: "rollup", link: '/frontend/rollup' },
           { text: "nodejs", link: '/frontend/nodejs' },
-          { text: "deno", link: '/frontend/deno' }
+          { text: "deno", link: '/frontend/deno' },
+          { text: "interview", link: '/frontend/interview' },
         ]
       },
 
@@ -113,7 +113,6 @@ export default defineConfig({
         { text: "Solid", link: '/frontend/solid' },
         { text: "Svelte", link: '/frontend/svelte' },
         { text: "Angular", link: '/frontend/angular' },
-        { text: "Interview", link: '/frontend/interview' },
         { text: "VisibleEnd", link: '/frontend/visibleEnd' },
         { text: "Next", link: '/frontend/next' },
         { text: "Nuxt", link: '/frontend/nuxt' },
@@ -122,7 +121,8 @@ export default defineConfig({
         { text: "Webpack", link: '/frontend/webpack' },
         { text: "Rollup", link: '/frontend/rollup' },
         { text: "Nodejs", link: '/frontend/nodejs' },
-        { text: "Deno", link: '/frontend/deno' }
+        { text: "Deno", link: '/frontend/deno' },
+        { text: "Interview", link: '/frontend/interview' },
       ],
       '/java/backend/': [
 
