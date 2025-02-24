@@ -11,7 +11,7 @@ hero:
     border-radius: 50%
   actions:
     - theme: brand
-      text: 个人项目合集
+      text: ssg-aim
       link: /personal_project
     - theme: alt
       text: vitePress 配置文档
