@@ -8,7 +8,7 @@ export default defineConfig({
   description: "JuWenZhang_Static_Site",
   appearance: 'dark',
   outDir: "docs/.vitepress/dist/",
-  head: [["link", {rel: 'icon', href: '/img.jpg'}]],
+  head: [['link', {rel: 'icon', href: '/img.jpg'}]],// 添加网站图标
   themeConfig: {
     logo: "/img.jpg",
     nav: [
@@ -132,7 +132,16 @@ export default defineConfig({
         { text: "Interview", link: '/frontend/interview' },
       ],
       '/java/backend/': [
-
+        { text: "java_basic", link: "/java/backend/java" },
+        { text: "spring", link: "/java/backend/spring" },
+        { text: "springBoot", link: "/java/backend/springBoot" },
+        { text: "springCloud", link: "/java/backend/springCloud" },
+        { text: "mybatis", link: "/java/backend/mybatis" },
+        { text: "mybatisPlus", link: "/java/backend/mybatisPlus" },
+        { text: "redis", link: "/java/backend/redis" },
+        { text: "elasticSearch", link: "/java/backend/elasticSearch" },
+        { text: "mongodb", link: "/java/backend/mongodb" },
+        { text: "mysql", link: "/java/backend/mysql" },
       ],
       '/python/backend/': [
 

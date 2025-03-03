@@ -1384,124 +1384,147 @@ console.log(JuWenZhang.getName())
   * 看懂了的可以自己尝试着封装我们的 fetch API 吧，使用 any 封装出来了也是很优秀的，这是真的
     * TS 中的类型模型的话实际上比很多的后端语言的数据模型还要大很多的
 ```typescript
-// MyAxiosRequest.ts
-import axios from "axios"
-import type {AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios"
-import config from "./config.mjs";
+import axios, { AxiosHeaders } from 'axios'
+import type {
+  AxiosInstance,
+  InternalAxiosRequestConfig,
+} from "axios"
+import type { MyAxiosRequestConfig } from "@/types/AxiosType.ts"
 
-// 接口可以抽到 types 文件中去，实现代码的抽离嘛，注意引入类型的时候，使用 type 关键字
-// 提高 ts 编译工具的解析速度，懂？？？
-// 主要是引入 MyAxiosRequestConfig 类型吧
-// 引入实例: import type {MyAxiosRequestConfig} from "myAxiosType.ts"  export导出模式
-//         import type MyAxiosRequestConfig from "myAxiosType"  export default 导出模式
-interface MyInterceptors<T> {
-    // 调用者手动传入的请求成功的拦截函数  
-    requestSuccessFn?: (config: AxiosRequestConfig) => AxiosRequestConfig
-    // 调用者手动传入的请求失败的拦截函数
-    requestFailFn?: (err: any) => any
-    // 调用者手动传入的响应成功的拦截函数
-    responseSuccessFn?: (res: T) => T
-    // 调用者手动传入的响应失败的拦截函数
-    responseFailFn?: (err: any) => any  
-}
-// 对我们的 AxiosRequestConfig 进行扩展，实现允许调用者传入拦截器的
-interface MyAxiosRequestConfig<T=AxiosResonse> extends AxiosRequestConfig {
-    interceptors?: MyInterceptors
-}
+// 开始真真的封装吧
+export class MyAxiosRequest {
+  private instance: AxiosInstance
 
-// 开始实现对 axios 请求的封装
-class MyAxiosRequest {
-    private instance: AxiosInstance
-    constructor(config: MyAxiosRequestConfig) {
-        this.instance = axios.create(config)
-    
-        // 配置请求全局拦截器
-        this.instance.interceptors.request.use((config: AxiosRequestConfig) => {
-            config.headers = {
-                "Content-Type": "application/json;charset=UTF-8",
-                "Authorization": localStorage.getItem("token") || "",
-                "Accept": "application/json",
-                // 下面的拦截是为了解决我们的 cors 的跨域问题，面试的时候这个肯定需要问的
-                // 这个也就是我们的为什么需要拥有 nodejs 开发经验的原因之一吧
-                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
-                "Access-Control-Allow-Credentials": "true",
-                "Access-Control-Max-Age": "3600",
-                // 还可以配置 cdn 缓存的字段哟，中高级程序员必会的，必考的一点，和后端的 SSO 单点登录一样的难点吧
-                // 目前单点登录使用的团队就是 jd 团队了，jd 还实现开发了我们的 taro 微信小程序开发框架
-                // 重邮红岩的重邮帮和蓝山的we重邮都是使用taro实现的呐
-                "Cache-Control": "max-age=10"
-            }  
-            return config
-        }, err => {
-            return err  
-        })
-        // 配置响应全局拦截器
-        this.instance.interceptors.response.use(res => {
-            return res  
-        }, err => {
-            return err
-        })
-    
-        // 局部拦截器的封装
-        if (config?.interceptors) {
-            this.instance.interceptors.request.use(
-                config.interceptors?.requestSuccessFn,
-                config.interceptors?.requestFailFn    
-            )
-            this.instance.interceptors.response.use(
-                config.interceptors?.responseSuccessFn,
-                config.interceptors?.responseFailFn    
-            )
+  constructor(config: MyAxiosRequestConfig) {
+    this.instance = axios.create(config)
+
+    // 全局请求拦截器
+    this.instance.interceptors.request.use(
+      (config: InternalAxiosRequestConfig) => {
+        const headers: AxiosHeaders = new AxiosHeaders();
+        headers.set(
+          "Content-Type",
+          "application/json;charset=UTF-8"
+        );
+        headers.set(
+          "Authorization",
+          localStorage.getItem("token") || ""
+        );
+        headers.set(
+          "Accept",
+          "application/json"
+        );
+        config.headers = headers;
+        return config;
+      },
+        err => {
+        return Promise.reject(err);
+      }
+    );
+
+    // 全局响应拦截器
+    this.instance.interceptors.response.use(res => {
+      return res;
+    }, err => {
+      switch (err.response.status){
+        case 400:
+          return Promise.reject({
+            message: "400 Bad Request",
+            status: 400,
+            data: err.response.data,
+          });
+        case 401:
+          return Promise.reject({
+            message: "401 Unauthorized",
+            status: 401,
+            data: err.response.data,
+          });
+        case 403:
+          return Promise.reject({
+            message: "403 Forbidden",
+            status: 403,
+            data: err.response.data,
+          });
+        case 404:
+          return Promise.reject({
+            message: "404 Not Found",
+            status: 404,
+            data: err.response.data,
+          });
+        case 500:
+          return Promise.reject({
+            message: "500 Internal Server Error",
+            status: 500,
+            data: err.response.data,
+          });
+        case 502:
+          return Promise.reject({
+            message: "502 Bad Gateway",
+            status: 502,
+            data: err.response.data,
+          });
+        case 503:
+          return Promise.reject({
+            message: "503 Service Unavailable",
+            status: 503,
+            data: err.response.data,
+          });
+      }
+    });
+
+    if (config?.interceptors) {
+      this.instance.interceptors.request.use(
+        config.interceptors?.requestSuccessFn,
+        config.interceptors?.requestFailFn
+      );
+      this.instance.interceptors.response.use(
+        config.interceptors?.responseSuccessFn,
+        config.interceptors?.responseFailFn
+      );
+    }
+  }
+
+  // 请求方法
+  request<T = any>(config: MyAxiosRequestConfig) {
+    if (config.interceptors?.requestSuccessFn) {
+      config = config.interceptors.requestSuccessFn(
+        config as InternalAxiosRequestConfig
+      ) as MyAxiosRequestConfig;
+    }
+    return new Promise<T>((resolve, reject) => {
+      this.instance.request<T>(config).then(res => {
+        if (config.interceptors?.responseSuccessFn) {
+          res = config.interceptors.responseSuccessFn(res);
         }
-    }
-
-    // 封装网络请求方法
-    request<T=any>(config: MyAxiosRequestConfig) {
-        // 判断是否有我们的请求成功的拦截器
-        if (config.interceptors?.requestSuccessFn) {
-            config = config.interceptors.requestSuccessFn(config)  // 返回的 config 是经过拦截器处理过的
+        resolve(res.data);
+      }).catch(err => {
+        if (config.interceptors?.responseFailFn) {
+          err = config.interceptors.responseFailFn(err);
         }
-        // 解决返回结果 res 是 unkown 数据类型的问题，给我们的 promise 一个类型
-        return new Promise<T>((resolve, reject) => {
-            // 发送网络请求, request 源码中是让我们传入了类型了的呐
-            this.instance.request<any, T>(config).then(res => {
-                // 判断是否具备请求成功的拦截器传入吧
-                if (config.interceptors?.responseSuccessFn) {
-                    res = config.interceptors.responseSuccessFn(res)
-                }
-                // 这里有很多的前端学习者都有的问题，就是为什么必须 .data，这个的话是 axios 内部源码的封装格式吧
-                // api 接口真真返回给我们的数据真真在的是我们的 .data 中的呐
-                resolve(res.data) 
-            }).catch(err => {
-                // 判断是否具备请求失败的拦截器传入吧
-                if (config.interceptors?.responseFailFn) {
-                    err = config.interceptors.responseFailFn(err)
-                }
-                reject(err)
-            })
-        })
-    }
+        reject(err);
+      })
+    })
+  }
 
-    get<T=any>(config: MyAxiosRequestConfig) {
-        this.request<T>({ ...config, method: "get" })
-    }
+  get<T = any>(config: MyAxiosRequestConfig) {
+    return this.request<T>({ ...config, method: "get" });
+  }
 
-    post<T=any>(config: MyAxiosRequestConfig) {
-        this.request<T>({ ...config, method: "post" })
-    }
+  post<T = any>(config: MyAxiosRequestConfig) {
+    return this.request<T>({ ...config, method: "post" });
+  }
 
-    put<T=any>(config: MyAxiosRequestConfig) {
-        this.request<T>({ ...config, method: "put" })
-    }
+  put<T = any>(config: MyAxiosRequestConfig) {
+    return this.request<T>({ ...config, method: "put" });
+  }
 
-    delete<T=any>(config: MyAxiosRequestConfig) {
-        this.request<T>({ ...config, method: "delete" })
-    }
-    
-    options<T=any>(config: MyAxiosRequestConfig) {
-        this.request<T>({ ...config, method: "options" })
-    }
+  delete<T = any>(config: MyAxiosRequestConfig) {
+    return this.request<T>({ ...config, method: "delete" });
+  }
+
+  options<T = any>(config: MyAxiosRequestConfig) {
+    return this.request<T>({ ...config, method: "options" });
+  }
 }
 ```
 * 这样的 axios 的封装实现了我们的细粒度的控制拦截器了吧
