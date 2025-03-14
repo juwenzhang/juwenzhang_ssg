@@ -39,6 +39,18 @@ export default defineConfig({
       },
 
       {
+        text: "中间件",
+        items: [
+          { text: "mysql", link: '/middleware/mysql' },
+          { text: "mongodb", link: '/middleware/mongodb' },
+          { text: "redis", link: '/middleware/redis' },
+          { text: "elasticsearch", link: '/middleware/elasticsearch' },
+          { text: "linux", link: '/middleware/linux' },
+          { text: "docker", link: '/middleware/docker' },
+        ]
+      },
+
+      {
         text: 'Java后端',
         items: [
           { text: "java", link: '/java/backend/java' },
@@ -47,10 +59,6 @@ export default defineConfig({
           { text: "springCloud", link: '/java/backend/springCloud' },
           { text: "mybatis", link: '/java/backend/mybatis' },
           { text: "mybatisPlus", link: '/java/backend/mybatisPlus' },
-          { text: "redis", link: '/java/backend/redis' },
-          { text: "elasticSearch", link: '/java/backend/elasticSearch' },
-          { text: "mongodb", link: '/java/backend/mongodb' },
-          { text: "mysql", link: '/java/backend/mysql' },
         ]
       },
 
@@ -92,18 +100,9 @@ export default defineConfig({
           { text: "tide", link: '/rust//backend/tide' },
         ]
       },
-
-      {
-        text: "计算机网络",
-        items: [
-          { text: "dns解析原理", link: '/network/dns' },
-        ]
-      },
-
       {
         text: '年度总结',
         items: [
-          { text: "2024", link: '/year/2024' },
           { text: "2025", link: '/year/2025'}
         ]
       }
@@ -131,6 +130,14 @@ export default defineConfig({
         { text: "Deno", link: '/frontend/deno' },
         { text: "Interview", link: '/frontend/interview' },
       ],
+      '/middleware/': [
+        { text: "mysql", link: "/middleware/mysql" },
+        { text: "mongodb", link: "/middleware/mongodb" },
+        { text: "redis", link: "/middleware/redis" },
+        { text: "elasticsearch", link: "/middleware/elasticsearch" },
+        { text: "linux", link: "/middleware/linux" },
+        { text: "docker", link: "/middleware/docker" },
+      ],
       '/java/backend/': [
         { text: "java_basic", link: "/java/backend/java" },
         { text: "spring", link: "/java/backend/spring" },
@@ -138,10 +145,6 @@ export default defineConfig({
         { text: "springCloud", link: "/java/backend/springCloud" },
         { text: "mybatis", link: "/java/backend/mybatis" },
         { text: "mybatisPlus", link: "/java/backend/mybatisPlus" },
-        { text: "redis", link: "/java/backend/redis" },
-        { text: "elasticSearch", link: "/java/backend/elasticSearch" },
-        { text: "mongodb", link: "/java/backend/mongodb" },
-        { text: "mysql", link: "/java/backend/mysql" },
       ],
       '/python/backend/': [
 
@@ -151,11 +154,6 @@ export default defineConfig({
       ],
       '/rust/backend/': [
 
-      ],
-      '/network': [
-        {
-          text: 'dns解析原理', link: '/network/dns'
-        }
       ],
       '/year/': [
         { text: '2023', link: '/year/2023' },
