@@ -45,6 +45,8 @@ export default defineConfig({
           { text: "mongodb", link: '/middleware/mongodb' },
           { text: "redis", link: '/middleware/redis' },
           { text: "elasticsearch", link: '/middleware/elasticsearch' },
+          { text: "http", link: '/middleware/http' },
+          { text: "designMode", link: '/middleware/designMode' },
           { text: "linux", link: '/middleware/linux' },
           { text: "docker", link: '/middleware/docker' },
         ]
@@ -135,6 +137,8 @@ export default defineConfig({
         { text: "mongodb", link: "/middleware/mongodb" },
         { text: "redis", link: "/middleware/redis" },
         { text: "elasticsearch", link: "/middleware/elasticsearch" },
+        { text: "http", link: "/middleware/http" },
+        { text: "designMode", link: '/middleware/designMode' },
         { text: "linux", link: "/middleware/linux" },
         { text: "docker", link: "/middleware/docker" },
       ],

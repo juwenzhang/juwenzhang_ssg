@@ -385,3 +385,10 @@ tail -f /var/log/syslog
 * 对于 linux 操作的话还有很多的其他的操作
   * 上面的是我平时使用得比较多的一些 linux 命令了吧
   * 自己还可以进行额外的拓展吧
+
+## 远程连接
+* 为了方便我们的平时的操作，我们是可以进行的是我们的为虚拟机安装一个服务: sshd 的
+  * `sudo dnf install openssh-server`
+  * `sudo systemctl enable sshd`
+  * `sudo systemctl start sshd`
+* 同时我们需要做的还有就是重新配置虚拟机的网络配置吧
