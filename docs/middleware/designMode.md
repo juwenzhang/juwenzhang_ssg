@@ -397,3 +397,68 @@ class Subcriber {
 ![img18](/img_18.png)
 
 ## 代理模式（proxy pattern）
+### 是什么呐？？🤔🤔
+* 就是一个我们的使用代理对象一个操作吧，为一个对象提供了一个代用品或者说是占位符吧，从而来控制对一个对象的访问的吧
+
+![img19](/img_19.png)
+
+### 缓存代理
+* 缓存代理就是指的是我们的一些开销大的运算结果提供暂时的存储，在下次进行运算的时候，如果传递一个进来的参数就跟之前的一致，则返回前端存储了的结果吧
+```typescript
+const muti = function() {
+    console.log("计算乘积之和")
+    let a = 1
+    for (let i = 0, l = arguments.length; i < l; i++) {
+        a = a * arguments[i]
+    }
+    return a
+}
+
+// 开始使用我们的缓存进行计算吧
+const cacheMuti = (function() {
+    const cache = {}
+    return function() {
+        const args = Array.prototype.join.call(arguments, ',')
+        if (args in cache) {
+            return cache[args]
+        }
+        return cache[args] = muti.apply(this, arguments)
+    }
+})
+```
+
+### 虚拟代理
+* 虚拟代理就是实现的是我们的将一些开销十分大的对象延迟到真真需要他们的时候才进行创建的一种代理吧
+* 常见的就是我们的图片懒加载吧
+```typescript
+let MyImage = (function() {
+    let imgNode = document.createElement('img')
+    document.body.appendChild(imgNode)
+  
+    let image = new Image()
+    image.onload = function() {
+        imgNode.src = this.src
+    }
+    
+    return {
+        setSrc: function(src) {
+            imgNode.src = 'loading.gif'
+            image.src = src
+        }
+    }
+})
+
+// 代理实现
+let proxyImage = (function() {
+    let img = new Image()
+    img.onload = function() {
+        MyImage.setSrc(this.src)
+    }
+    return {
+        setSrc: function(src) {
+            MyImage.setSrc('loading.gif')
+            img.src = src
+        }
+    }
+})
+```

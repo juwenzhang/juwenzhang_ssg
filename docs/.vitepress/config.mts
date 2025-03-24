@@ -32,6 +32,7 @@ export default defineConfig({
           { text: "vite", link: '/frontend/vite' },
           { text: "webpack", link: '/frontend/webpack' },
           { text: "rollup", link: '/frontend/rollup' },
+          { text: "gulp", link: '/frontend/gulp' },
           { text: "nodejs", link: '/frontend/nodejs' },
           { text: "deno", link: '/frontend/deno' },
           { text: "interview", link: '/frontend/interview' },
@@ -46,9 +47,11 @@ export default defineConfig({
           { text: "redis", link: '/middleware/redis' },
           { text: "elasticsearch", link: '/middleware/elasticsearch' },
           { text: "http", link: '/middleware/http' },
+          { text: "cors", link: '/middleware/cors' },
           { text: "designMode", link: '/middleware/designMode' },
           { text: "linux", link: '/middleware/linux' },
           { text: "docker", link: '/middleware/docker' },
+          { text: "algorithm", link: '/middleware/algorithm' }
         ]
       },
 
@@ -128,6 +131,7 @@ export default defineConfig({
         { text: "Vite", link: '/frontend/vite' },
         { text: "Webpack", link: '/frontend/webpack' },
         { text: "Rollup", link: '/frontend/rollup' },
+        { text: "Gulp", link: '/frontend/gulp' },
         { text: "Nodejs", link: '/frontend/nodejs' },
         { text: "Deno", link: '/frontend/deno' },
         { text: "Interview", link: '/frontend/interview' },
@@ -138,9 +142,11 @@ export default defineConfig({
         { text: "redis", link: "/middleware/redis" },
         { text: "elasticsearch", link: "/middleware/elasticsearch" },
         { text: "http", link: "/middleware/http" },
+        { text: "cors", link: "/middleware/cors" },
         { text: "designMode", link: '/middleware/designMode' },
         { text: "linux", link: "/middleware/linux" },
         { text: "docker", link: "/middleware/docker" },
+        { text: "algorithm", link: "/middleware/algorithm" }
       ],
       '/java/backend/': [
         { text: "java_basic", link: "/java/backend/java" },
