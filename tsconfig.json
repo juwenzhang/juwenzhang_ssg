@@ -1,4 +1,7 @@
 {
+  // Check if the 'src' directory exists and contains TypeScript files
+  // If not, create the 'src' directory and add a sample TypeScript file
+  // Ensure that the 'include' path is correct and matches the actual project structure
   "compilerOptions": {
     "module": "ESNext",
     "target": "es5",
