@@ -555,5 +555,26 @@ selector {
 更多的关于 CSS 的样式学习的话请看:
 
 **https://juejin.cn/post/7419908145399005211**
-
 **https://developer.mozilla.org/zh-CN/docs/Web/CSS**
+
+## 水平居中方案
+* 行内元素居中: 父元素设置`text-align: center`
+* 块级元素居中
+  * 自身设置 `margin: var(number)px auto`
+  * 父元素设置为`相对定位`，子元素设置`绝对定位`，子元素设置 `left: 50%`，子元素本身设置 `transform: translateX(-50%)`
+* 还可以使用 flex 布局实现
+
+## 垂直居中方案
+* 行内元素垂直居中: 子元素设置 line-height 属性即可
+* 多个行元素垂直居中: `display: table-cell` 和 `vertical-align: middle`
+* 块级元素垂直居中: 通过定位 + transform 实现
+
+## CSS 函数有哪些
+* 属性: `attr()`
+* 背景图片函数: `linear-gradient` `radial-gradient` `image-set()` `image()` `url()` `ellement()`
+* 形变函数: translate scale rotate
+
+## less sass css 区别
+* 定义变量: css使用`--` less使用`@` sass使用`$`
+
+## CSS Modules

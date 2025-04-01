@@ -156,6 +156,23 @@ function foo():void {
 }
 ```
 
+### Typescript keyof 和 typeof operator
+* keyof 就是实现的是获取我们的对象类型的所有的键名的类型的操作符
+* typeof 就是实现的是获取我们的变量的类型的操作符
+```typescript
+const obj = {
+    name: "hello world",
+    age: 18,
+    id: "hello jwt id" 
+}
+// 开始使用我们的 keyof 操作符
+type obj_key = keyof typeof obj;  // 这个就是我们的 keyof 操作符的使用了吧
+console.log(obj_key)
+// 开始使用我们的 typeof 操作符
+type obj_type = typeof obj;  // 这个就是我们的 typeof 操作符的使用了吧
+console.log(obj_type)
+```
+
 ### TypeScript 元组数据类型 tuple
 * 就是实现的定义的是我们的不可变的数组数据类型
 ```typescript
@@ -909,6 +926,8 @@ type NumberAndStringArray = toArray<number|string>  // number[] | string[]
 ```
 
 ### TypeScript Partial 类型可选转换
+* Partial 内置的 ts 泛型工具实现的是将我们的一个类型全部转化为可选的新的数据类型吧
+* 使用的主要的形式为: `Partial<Type>`
 ```typescript
 interface Person {
     name: string
@@ -930,6 +949,8 @@ type PersonOptional1 = Partial<Person>
 ```
 
 ### TypeScript Required 类型必选转换
+* Required 内置的 ts 泛型工具实现的是将我们的一个类型全部转化为必选的新的数据类型吧
+* 使用的主要的形式为: `Required<Type>`
 ```typescript
 interface Person {
     name: string
@@ -953,6 +974,8 @@ type toRequiredReadonlyType<T> = {
 ```
 
 ### TypeScript Record 键值对转换
+* Record 内置的 ts 泛型工具实现的是将我们的一个类型全部转化为键值对的新的数据类型吧
+* 使用的主要的形式为: `Record<KeysType, ValueType>`
 ```typescript
 // Record<key, value>
 // keyof 获取出来的是我们的联合类型，所以说使用我们的 in 的时候就是实现的是联合类型遍历吧
@@ -972,6 +995,9 @@ const obj: objType = {
 ```
 
 ### TypeScript Pick 选择类型
+* Pick 内置的 ts 泛型工具实现的是将我们的一个类型全部转化为选择的新的数据类型吧
+* 使用的主要的形式为: `Pick<Type, Keys>`
+* 主要是实现的是选择一个新的类型中使用原本类型中的那些 key: value 键值对的吧
 ```typescript
 interface Person {
     name: string
@@ -987,6 +1013,9 @@ type MyPick<k, v extends keyof k> = {
 ```
 
 ### TypeScript Omit 过滤类型
+* Omit 内置的 ts 泛型工具实现的是将我们的一个类型全部转化为过滤的新的数据类型吧
+* 使用的主要的形式为: `Omit<Type, Keys>`
+* 主要是实现的是过滤一个新的类型中使用原本类型中的那些 key: value 键值对的吧
 ```typescript
 interface Person {
     name: string
@@ -999,6 +1028,49 @@ type toOmit = Omit<Person, "sex"> // { name:string, age:number }
 type MyOmit<T, K extends keyof T> = {
     [P in keyof T as P extends K ? never: P]: T[P]
 }
+```
+
+### TypeScript ReturnType 内置工具
+* 实现的是我们的获取函数的返回值类型
+* 使用的主要的形式为: `ReturnType<Type>`
+```typescript
+function foo():string {
+    return "string"
+}
+type FooFnReturnType = ReturnType<typeof foo>  // string类型了
+```
+
+### TypeScript InstanceType 内置工具
+* 实现的是我们的获取构造函数的实例类型
+* 使用的主要的形式为: `InstanceType<Type>`
+```typescript
+function foo():string {
+    return "string" 
+}
+type FooFnReturnType = InstanceType<typeof foo>  // Function
+```
+
+### TypeScript Parameters 内置工具
+* 实现的是我们的获取函数的参数类型
+* 使用的主要的形式为: `Parameters<Type>`
+```typescript
+function foo(name:string, age:number):string {
+    return "string"
+}
+type FooFnReturnType = Parameters<typeof foo>  // [name:string,age:number]
+```
+
+### TypeScript ConstructorParameters 内置工具
+* 实现的是我们的获取构造函数的参数类型
+* 使用的主要的形式为: `ConstructorParameters<Type>`
+```typescript
+class Person {
+    constructor(name:string, age:number) {
+        this.name = name
+        this.age = age
+    }
+}
+type PersonConstructorParameters = ConstructorParameters<typeof Person>  // [name:string, age:number]
 ```
 
 ## 内置类型工具
