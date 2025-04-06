@@ -551,26 +551,6 @@ Object.prototype[Symbol.iterator] = function () {
 }
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## JavaScript Set 数据类型
 > * set 数据结构是一个无序的但是元素不重复的数据结构吧
 > * 对应的还有我们的 WeakSet 吧
@@ -619,22 +599,6 @@ mySet.add(3)  // 向 set 数据结构中添加元素
 mySet.add(4)  // 向 set 数据结构中添加元素
 console.log(mySet.has(1))  // true
 console.log(mySet.has(5))  // false
-```
-
-### Set.prototype[Symbol.iterator]()
-* 我们的 set 数据结构可以进行使用 for...of 的本质就是因为具备该方法的定义吧
-* 主要就是迭代器的实现原理的吧
-  * 迭代器的本质就是内部定义了我们的 Symbol.iterator 方法
-  * 然后内部函数的调用返回了一个 `next()` 函数
-```javascript
-Set.prototype[Symbol.iterator] = function () {
-  const iterator = this.values()  // 获取 set 数据结构中的元素
-  return {  // 返回一个迭代器
-    next: function () {  // 迭代器的 next 方法
-      return iterator.next()  // 返回对应的元素
-    }
-  }
-}
 ```
 
 ## Event Loop
