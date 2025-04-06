@@ -27,14 +27,13 @@ features:
     details: Django Flask FastApi DjangoRestFramework Sanic 都是目前使用 python 的最先接触的开发架构，
       准确来说，我最先接触的就是 Python ，然后才是前端，所以说我的 Python 功底可能比前端功底还要好很多呐
     link: /
-  - title: Current-现在
-    details: 当前正在开发属于自己的个人动态的博客网站，主要使用的是 Java 的 SpringCloud 和 前端 MicroApp 进行的开发
-      同时最近主要在学习： Golang 和 Rust，因为最近所在的技术团队需要这两个方面挺多的，所以说希望借此实习机会拓展自己的技术栈吧，
-      同时也是希望小鞠未来可以更加优秀，在编程行业中变得越来越优秀，技术栈越来越完善
+  - title: 桌面端开发
+    details: electron + react-native
     link: /
-  - title: Future-未来
-    details: 由于本人接触编程的时间之短，所以说在很多的方面比上团队其他人有很多的不足，所以说希望可以通过实习机会，优秀自己的一些编码，
-      计划的是下一段实习去国内的更多的优秀团队工作吧，比如说 @拼多多 @得物 @美团 @淘宝 @京东... 这些类似的优秀的团队吧，
-      当然我最希望的就是能在字节跳动留下来就留下来，因为内部团队的风格我是十分的喜爱的
+  - title: 微信小程序开发
+    details: taro + uniapp
+    link: /
+  - title: 其他技术栈
+    details: rust and golang
     link: /
 ---
