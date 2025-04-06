@@ -27,10 +27,11 @@
 ### Array.prototype.push()
 * push 方法就是实现的是向数组的末尾进行添加元素的方法呐，同时修改数组本身
 * 自定义手写 push 方法的核心步骤
-> * 1. 获取得到数组的长度，因为是在原型链上，所以说就是通过 this 就可以获取得到了
-> * 2. 进行循环遍历，将需要添加的元素依次添加到数组的末尾，同时修改数组的长度
-> * 3. 为了满足可以同时添加多个元素，此时需要使用 es6 的扩展运算符来实现吧
-> * 4. 返回数组的长度
+> * 获取得到数组的长度，因为是在原型链上，所以说就是通过 this 就可以获取得到了
+> * 进行循环遍历，将需要添加的元素依次添加到数组的末尾，同时修改数组的长度
+> * 为了满足可以同时添加多个元素，此时需要使用 es6 的扩展运算符来实现吧
+> * 返回数组的长度
+
 ```javascript
 Array.prototype.MyPush = function (...args) {
   const len = this.length;  // 获取得到数组的长度
@@ -48,12 +49,13 @@ console.log(arr);  // [1, 2, 3, 4, 5, 6]
 ### Array.prototype.pop()
 * pop 方法就是实现的是向数组的末尾进行删除元素的方法呐，同时修改数组本身,同时返回删除的元素
 * 自定义手写 pop 方法的核心步骤
-> * 1. 获取得到数组的长度，因为是在原型链上，所以说就是通过 this 就可以获取得到了
-> * 2. 如果数组的长度为0，那么就返回undefined
-> * 3. 获取得到数组的最后一个元素，因为是在原型链上，所以说就是通过 this 就可以获取得到了
-> * 4. 删除数组的最后一个元素，因为是在原型链上，所以说就是通过 this 就可以获取得到了
-> * 5. 修改数组的长度，因为是在原型链上，所以说就是通过 this 就可以获取得到了
-> * 6. 返回删除的元素
+> * 获取得到数组的长度，因为是在原型链上，所以说就是通过 this 就可以获取得到了
+> * 如果数组的长度为0，那么就返回undefined
+> * 获取得到数组的最后一个元素，因为是在原型链上，所以说就是通过 this 就可以获取得到了
+> * 删除数组的最后一个元素，因为是在原型链上，所以说就是通过 this 就可以获取得到了
+> * 修改数组的长度，因为是在原型链上，所以说就是通过 this 就可以获取得到了
+> * 返回删除的元素
+
 ```javascript
 Array.prototype.MyPop = function () {
   const len = this.length;  // 获取得到数组的长度
@@ -73,11 +75,12 @@ console.log(arr, deletedEle);  // [1, 2] 3
 ### Array.prototype.shift()
 * shift 方法就是实现的是向数组的开头进行删除元素的方法呐，同时修改数组本身,同时返回删除的元素
 * 自定义手写 shift 方法的核心步骤
-> * 1. 获取得到数组的长度，因为是在原型链上，所以说就是通过 this 就可以获取得到了
-> * 2. 如果数组的长度为0，那么就返回undefined
-> * 3. 提前存储数组第一个元素，通过 this 即可获得
-> * 4. 循环遍历数组，将数组的元素向前移动一位
-> * 5. 将数组的第一个元素进行删除，同时数组长度发生变化，同时将删除的元素进行返回即可
+> * 获取得到数组的长度，因为是在原型链上，所以说就是通过 this 就可以获取得到了
+> * 如果数组的长度为0，那么就返回undefined
+> * 提前存储数组第一个元素，通过 this 即可获得
+> * 循环遍历数组，将数组的元素向前移动一位
+> * 将数组的第一个元素进行删除，同时数组长度发生变化，同时将删除的元素进行返回即可
+
 ```javascript
 Array.prototype.MyShift = function () {
   const len = this.length;  // 获取得到数组的长度
@@ -96,11 +99,12 @@ Array.prototype.MyShift = function () {
 ### Array.prototype.unshift()
 * unshift 方法就是实现的是向数组的开头进行添加元素的方法呐，同时修改数组本身
 * 自定义手写 unshift 方法的核心步骤
-> * 1. 实现获取得到元素的长度
-> * 2. 将每个元素进行向后移动需要添加的元素长度的位数
-> * 3. 将需要添加元素依次添加到数组的开头
-> * 4. 修改数组的长度
-> * 5. 返回数组的长度
+> * 实现获取得到元素的长度
+> * 将每个元素进行向后移动需要添加的元素长度的位数
+> * 将需要添加元素依次添加到数组的开头
+> * 修改数组的长度
+> * 返回数组的长度
+
 ```javascript
 Array.prototype.MyUnshift = function (...args) {
   const len = this.length;  // 获取得到数组的长度
@@ -226,7 +230,7 @@ Array.prototype.MySort = function (fn) {
 * 主要的使用形式为: concat(item1, item2,...)
   * item1, item2,...: 需要拼接的元素
   * 处理 item1, item2,... 都是可选的
-* 如果为了事务的严谨性的话，我们可以对数组中的数据类型进行对应的校验吧  
+* 如果为了事务的严谨性的话，我们可以对数组中的数据类型进行对应的校验吧
 ```javascript
 Array.prototype.MyConcat = function (...args) {
   const len = this.length  // 获取数组的长度
@@ -508,34 +512,6 @@ Array.prototype.MyFlatMap = function (callback, thisArg) {
 }
 ```
 
-### `Array.prototype[Symbol.iterator]()`
-* 我们的数组可以进行使用 for...of 的本质就是因为具备该方法的定义吧
-* 主要就是迭代器的实现原理的吧
-  * 迭代器的本质就是内部定义了我们的 Symbol.iterator 方法
-  * 然后内部函数的调用返回了一个 `next()` 函数
-  * 同时内部返回的形式可以作为是否迭代完成的一个标志吧
-    * 主要的就是 { value: undefined, done: true }
-```javascript
-Array.prototype[Symbol.iterator] = function () {
-  let index = 0  // 存储当前的索引
-  const len = this.length  // 获取数组的长度
-  return {  // 返回一个迭代器
-    next: function () {  // 迭代器的 next 方法
-      if (index < len) {  // 如果当前的索引小于数组的长度，那么就返回对应的元素
-        return {  // 返回对应的元素
-          value: this[index++],  // 返回对应的元素
-          done: false  // 返回对应的元素
-        }
-      } else {  // 如果当前的索引大于数组的长度，那么就返回对应的元素
-        return {  // 返回对应的元素
-          value: undefined,  // 返回对应的元素
-          done: true  // 返回对应的元素
-        }
-      }
-    }
-  } 
-}
-```
 ```javascript
 // 来一个实际的开发例子吧
 const obj = {
@@ -574,6 +550,26 @@ Object.prototype[Symbol.iterator] = function () {
   } 
 }
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## JavaScript Set 数据类型
 > * set 数据结构是一个无序的但是元素不重复的数据结构吧
@@ -641,7 +637,7 @@ Set.prototype[Symbol.iterator] = function () {
 }
 ```
 
-## Event Loop 
+## Event Loop
 > * https://juejin.cn/post/7108751200262029319?share_token=de110d40-1d5f-4171-a6b9-35e1d08870fd
 * Event Loop 是我们常说的关于事件循环的一些玩意吧
 * 在我们的 js 中的话事件循环主要是包含了三个部分吧
