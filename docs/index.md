@@ -4,11 +4,11 @@ layout: home
 
 hero:
   name: "Juwenzhang"
-  tagline: "努力在大学毕业获取ssp，立志于字节2-2（阿里p7），client-side-developer、rust-developer、golang-developer"
+  tagline: "努力学习，持续进步"
   image:
     src: /img.jpg
     alt: 背景图
-    border-radius: 50%
+    border-radius: 10%
   actions:
     - theme: brand
       text: ssg-aim
@@ -19,13 +19,29 @@ hero:
 features:
   - title: FrontEnd-前端
     details: vue react javascript typescript
-    link: /frontend/interview.md
-  - title: Python-后端
-    details: Django Flask FastApi DjangoRestFramework Sanic
-  - title: 桌面端开发
-    details: electron + react-native
+    link: /web/web.md
   - title: 微信小程序开发
     details: taro + uniapp
-  - title: 其他技术栈
-    details: rust and golang
+    link: /platform/platform.md
+  - title: ssr服务端渲染
+    details: nuxt vue-ssr next react-ssr
+    link: /ssr/ssr.md
+  - title: 桌面端开发
+    details: electron + react-native
+    link: /desktop/desktop.md
+  - title: 微前端
+    details: qiankun + garfish
+    link: /micro-frontend/micro-frontend.md
+  - title: golang
+    details: golang backend + golang-webassembly + golang-rpc
+  - title: rust
+    details: rust backend + rust-webassembly + rust-rpc
+  - title: java
+    details: springboot + springcloud + springcloud-alibaba
+  - title: python
+    details: django + flask + fastapi + sanic + scrapy
+  - title: android
+    details: android-studio + kotlin + java + flutter 
+  - title: ios
+    details: xcode + swift + objective-c + flutter
 ---
