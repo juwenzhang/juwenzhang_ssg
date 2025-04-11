@@ -50,56 +50,6 @@ export default defineConfig({
       },
 
       {
-        text: 'Java后端',
-        items: [
-          { text: "java", link: '/java/backend/java' },
-          { text: "spring", link: '/java/backend/spring' },
-          { text: "springBoot", link: '/java/backend/springBoot' },
-          { text: "springCloud", link: '/java/backend/springCloud' },
-          { text: "mybatis", link: '/java/backend/mybatis' },
-          { text: "mybatisPlus", link: '/java/backend/mybatisPlus' },
-        ]
-      },
-
-      {
-        text: 'Python后端',
-        items: [
-          { text: "python", link: '/python/backend/python' },
-          { text: "django", link: '/python//backend/django' },
-          { text: "drf", link: '/python//backend/drf' },
-          { text: "flask", link: '/python//backend/flask' },
-          { text: "fastApi", link: '/python//backend/fastApi' },
-          { text: "sanic", link: '/python//backend/sanic' },
-          { text: "pydantic", link: '/python//backend/pydantic' },
-        ]
-      },
-
-      {
-        text: 'Golang 后端',
-        items: [
-          { text: "golang", link: '/golang/backend/golang' },
-          { text: "gin", link: '/golang//backend/gin' },
-          { text: "echo", link: '/golang//backend/echo' },
-          { text: "fastHttp", link: '/golang//backend/fastHttp' },
-          { text: "beego", link: '/golang//backend/beego' },
-          { text: "iris", link: '/golang//backend/iris' },
-          { text: "fiber", link: '/golang//backend/fiber' },
-        ]
-      },
-
-      {
-        text: 'Rust 后端',
-        items: [
-          { text: "rust", link: '/rust/backend/rust' },
-          { text: "actix", link: '/rust//backend/actix' },
-          { text: "warp", link: '/rust//backend/warp' },
-          { text: "tokio", link: '/rust//backend/tokio' },
-          { text: "hyper", link: '/rust//backend/hyper' },
-          { text: "rocket", link: '/rust//backend/rocket' },
-          { text: "tide", link: '/rust//backend/tide' },
-        ]
-      },
-      {
         text: '年度总结',
         items: [
           { text: "2025", link: '/year/2025'}
@@ -136,26 +86,8 @@ export default defineConfig({
         { text: "docker", link: "/middleware/docker" },
         { text: "algorithm", link: "/middleware/algorithm" }
       ],
-      '/java/backend/': [
-        { text: "java_basic", link: "/java/backend/java" },
-        { text: "spring", link: "/java/backend/spring" },
-        { text: "springBoot", link: "/java/backend/springBoot" },
-        { text: "springCloud", link: "/java/backend/springCloud" },
-        { text: "mybatis", link: "/java/backend/mybatis" },
-        { text: "mybatisPlus", link: "/java/backend/mybatisPlus" },
-      ],
-      '/python/backend/': [
-
-      ],
-      '/golang/backend/': [
-
-      ],
-      '/rust/backend/': [
-
-      ],
       '/year/': [
-        { text: '2023', link: '/year/2023' },
-        { text: '2022', link: '/year/2022' },
+        { text: '2025', link: '/year/2025' },
       ],
     },
 
