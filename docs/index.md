@@ -6,7 +6,7 @@ hero:
   name: "Juwenzhang"
   tagline: "努力学习，持续进步"
   image:
-    src: /img.jpg
+    src: /icon.png
     alt: 背景图
     border-radius: 10%
   actions:
@@ -48,4 +48,7 @@ features:
   - title: 前端面试
     details: html css javascript vue react nodejs
     link: /interview/frontEndInterview.md
+  - title: 前端其他知识
+    details: webWorker webSocket observer 打包工具 前端工程化
+    link: /other/other.md
 ---

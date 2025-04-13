@@ -8,7 +8,7 @@ export default defineConfig({
   description: "JuWenZhang_Static_Site",
   appearance: 'dark',
   outDir: "docs/.vitepress/dist/",
-  head: [['link', {rel: 'icon', href: '/img.jpg'}]],// 添加网站图标
+  head: [['link', {rel: 'icon', href: '/img.png'}]],// 添加网站图标
   themeConfig: {
     logo: "/img.jpg",
     nav: [

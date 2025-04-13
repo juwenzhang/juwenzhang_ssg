@@ -487,3 +487,10 @@ openssl rsa -in private_key.pem -pubout -out public_key.pem
 * 此时浏览器缓存就多了一个 `域名和IP地址的映射表`
 
 ![img17](/img_17.png)
+
+## HTTP 协议
+![](/http1.jpg)
+![](/http2.jpg)
+![](/http3.jpg)
+![](/http4.jpg)
+![](/http5.jpg)
