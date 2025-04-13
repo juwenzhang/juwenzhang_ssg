@@ -257,3 +257,125 @@ ws.send("hello")
   * `用户体验监控`: 收集白屏、卡顿等影响用户体验的问题
 > 前端埋点和前端监控虽然经常被放在一起讨论，但它们在目标、数据类型、实现方式和核心关注点上存在明显区别。前端埋点主要用于收集用户行为数据,以支持用户行为分析、产品优化等；
 > 而前端监控则侧重于监测系统的性能和稳定性，及时发现并解决性能瓶颈和代码异常
+
+## 前端稳定性以及SDK埋点
+* 当前前端准备项目: 埋点项目，跨端项目，基建项目，低代码平台项目
+* 前端稳定性
+  * `SDK开发`
+    * 性能采集
+    * 异常采集
+    * 用户行为埋点
+  * `数据上报协议`
+  * `数据清洗和加工`
+  * `数据可视化`
+* SDK 实现细节
+  * 性能，异常，用户行为指标设计
+  * 上报逻辑: 图片，sendbeacon，ajax，fetch
+
+## 前端性能指标
+* `页面加载指标`
+  * `FP` First Paint 首次加载
+  * `FCP` First Contentful Paint 首次内容绘制
+  * `FMP` First Meaningful Paint 首次有意义绘制
+  * `LCP` Largest Contentful Paint 最大内容绘制
+  * `TTFP` Time to First Byte，首次字节时间
+  * `DCL` DOMContentLoaded，DOM 加载完成
+* `交互指标`
+  * `INP` Interaction to Next Paint，理想值为小于 200ms
+  * `CLS` Cumulative Layout Shift，累计布局偏移，理想值为小于 0.1
+  * `FID` First Input Delay，首次输入延迟，理想值为小于 100ms
+* `其他指标`
+  * DNS 域名解析耗时
+  * TCP 连接耗时
+  * 请求响应耗时
+  * 下载资源耗时
+
+## 如何计算上述的指标内容呐？？？
+* `性能指标的采集`
+  * 主要就是通过的是我们的 window.Performance API 来实现的呐
+    * `计算页面加载指标`的话就是通过的是我们的 `PerformanceTiming` 来实现的呐
+  * 还可以通过 web-vitals 来实现的呐，进行对应的二开实现最后的一些指标设计吧
+* `异常指标的采集`
+  * 代码运行异常
+    * window.onerror 来实现我们的捕获代码运行异常吧
+  * Promise异常
+    * 原型链来实现的呐
+  * 请求异常
+  * 资源加载异常
+```javascript
+const { timing } = performance
+// todo 计算页面的加载时间
+const loadTiming = timing.loadEventEnd - timing.navigationStart
+cosnole.log("页面加载时间为：", loadTiming, "ms")
+// 代码降级的兼容写法
+const getLoadingTime = () => {
+    try {
+        return performance.timing.loadEventEnd - performance.timing.navigationStart
+    } catch (err) {
+        return Date.now() - performance.timing.navigationStart
+    }
+}
+
+//todo 代码异常监听
+/**
+ * @param type
+ * @param message 错误信息
+ * @param source 错误文件
+ * @param lineno 错误行数
+ * @param colno 错误列数
+ * @param error 错误对象
+ */
+window.onerror = (message, source, lineno, colno, error) => {
+    console.log("捕获到代码异常：", message, source, lineno, colno, error)
+    return false //阻止默认的错误处理
+}
+
+// todo Promise异常监听
+window.addEventListener('unhandledrejection', (event) => {
+    console.log("捕获到Promise异常：", event.reason)
+})
+
+//todo 请求异常监听，主要是使用我们的原型链来实现吧
+// todo 重写 then 方法
+const originnalFetch = window.fetch
+window.fetch = function (...args) {
+    return originnalFetch(...args).then((response) => {
+        if (!response.ok) {
+            throw new Error("捕获到请求异常：", response)
+        }
+        return response
+    })
+}
+```
+
+## 用户行为埋点
+* 无痕埋点
+* 可视化埋点
+* 自动埋点
+* 手动埋点
+```javascript
+//todo 无痕埋点
+// 也就是主要是使用我们的两个时间机制
+// 冒泡机制: 从父元素到子元素
+// 捕获机制: 从子元素到父元素
+// 默认是冒泡机制，也就是说在我们的父元素上进行绑定的事件，在子元素中也是可以触发的呐，这个就是我们的事件冒泡机制
+window.addEventListener('click', (event) => {
+    console.log("捕获到无痕埋点：", event.target)
+    const paths = event.path | event.composedPath()
+    const xpath = paths.map((item) => item.tagName).join(' > ')  // button > div > body > html > body
+    const className = paths.map(item => item.className.toLowerCase()).join("-")
+    console.log(xpath, className)
+})
+//对于我们的埋点上报的话一般使用的是我们的 xhr 来实现的对应的上报系统的吧
+//上报的一些监听的话主要是通过的是在 window 实现事件的绑定，从而进行对应的监听吧
+```
+
+> * https://juejin.cn/post/7218766396963717177?searchId=20250413161025505176AE133D7B2BB9B0 推荐阅读
+> * https://juejin.cn/post/7482957797770756131 推荐阅读
+> * 性能方面和稳定性方面的话主要是通过我们的: Performance API | PerformanceObserver | Performance Card | Lighthouse 来实现的呐
+>   * RAIL 也是可以了解的
+>     * 以前的前端性能测试指标吧
+>     * R-responsive: 响应速度
+>     * A-animated: 动画
+>     * I-idle: 空闲
+>     * L-load: 加载
