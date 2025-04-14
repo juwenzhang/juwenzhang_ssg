@@ -10,7 +10,19 @@
     "docs:preview": "vitepress preview docs",
     "deploy": "./deploy.sh"
   },
-  "keywords": [],
+  "keywords": [
+    "vitepress",
+    "juwenzhang",
+    "juzhihong",
+    "jzh",
+    "jwz",
+    "blog",
+    "jzh-blog",
+    "jzh-ssg",
+    "jzh-ssg-blog",
+    "jzh-blog-ssg",
+    "jzh-blog-ssg-vitepress"
+  ],
   "author": "juwenzhang",
   "license": "MIT",
   "devDependencies": {

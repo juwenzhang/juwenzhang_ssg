@@ -5,10 +5,13 @@ export default defineConfig({
   base: "/juwenzhang_ssg/",
   lastUpdated: true,
   title: "JuWenZhang",
+  keywords: "Juwenzhang,juwenzhang,juzhihong,jzh,jzh-blog,jzh-ssg,blog,jzh-ssg,jzh-ssg-blog,juwenzhang-blog-ssg",
   description: "JuWenZhang_Static_Site",
   appearance: 'dark',
   outDir: "docs/.vitepress/dist/",
-  head: [['link', {rel: 'icon', href: '/img.png'}]],// 添加网站图标
+  head: [
+    ['link', { rel: 'icon', href: '/img.ico' }]
+  ],
   themeConfig: {
     logo: "/img.jpg",
     nav: [
