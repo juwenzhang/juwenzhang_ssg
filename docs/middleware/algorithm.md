@@ -1047,3 +1047,312 @@ function HashTable() {
 ---
 
 ### 二叉搜索树实现
+* insertNode 插入节点实现
+* insert 插入实现
+* max 获取最大值
+* min 获取最小值
+* search 根据key实现寻找节点
+* 先序遍历
+  * `访问节点`
+  * `先序遍历其左子树`
+  * `先序遍历其右子树`
+* 中序遍历
+  * `中序遍历其左子树`
+  * `访问节点`
+  * `中序遍历其右子树`
+* 后序遍历
+  * `后续遍历其左子树`
+  * `后续遍历其右子树`
+  * `访问节点`
+* remove 删除节点操作
+  * 首先查找得到节点的位置
+  * 删除分为三种情况吧
+    * `查找到的都是叶子节点`
+      * 此时直接删除即可
+    * `查找到的只有一个子节点`
+      * 也是直接删除，让其父节点指向其下一个节点即可
+    * `查找到的都是有两个子节点`
+      * `左边找最大，右边找最小`进行对应的节点替换吧
+```javascript
+function BinarySearchTree() {
+    function Node(key) {
+        this.key = key;  // 节点的键值
+        this.left = null;  // 左子节点
+        this.right = null;  // 右子节点
+    }
+
+    // define property of root node
+    this.root = null;  // 根节点
+
+    /**
+     * 插入节点吧
+     * @param {Node} node 
+     * @param {Node} newNode 
+     */
+    BinarySearchTree.prototype.insertNode = function(node, newNode) {
+        // use recursion to insert node,while the node is null,insert node
+        if (newNode.key < node.key) {
+            if (node.left === null) {
+                node.left = newNode; 
+            } else {
+                this.insertNode(node.left, newNode); 
+            }
+        } else {
+            if (node.right === null) {
+                node.right = newNode; 
+            } else {
+                this.insertNode(node.right, newNode);
+            } 
+        }
+    }
+
+    // insert method
+    /**
+     * insert node to the tree
+     * @param {*} key 
+     * @param {*} value 
+     */
+    BinarySearchTree.prototype.insert = function(key) {
+        // 1. create node
+        let newNode = new Node(key);
+        // 2. insert node
+        // 2.1 if the tree is empty, insert node as root
+        if (this.root === null) {
+            this.root = newNode;
+        } else {
+            // 2.2 find the position to insert node
+            let current = this.root;
+            this.insertNode(current, newNode);
+        }
+    }
+
+    /**
+     * minimum value in the tree
+     * @returns the minimum value in the tree
+     */
+    BinarySearchTree.prototype.min = function() {
+        let current = this.root;
+        // if the tree is empty, return null
+        if (current === null) return null;
+        // find the leftmost node
+        while (current && current.left !== null) {
+            current = current.left;
+        }
+        return current.key;
+    }
+
+    /**
+     * maximum value in the tree
+     * @returns the maximum value in the tree
+     */
+    BinarySearchTree.prototype.max = function() {
+        let current = this.root;
+        // if the tree is empty, return null
+        if (current === null) return null;
+        // find the rightmost node
+        while (current && current.right!== null) {
+            current = current.right;
+        }
+        return current.key;
+    }
+
+    /**
+     * 搜索指定的节点
+     * @param {*} key 
+     * @returns {Node|null} Node or null
+     */
+    BinarySearchTree.prototype.search = function(key) {
+        let current = this.root;
+        // if the tree is empty, return null
+        if (current === null) return null;
+        // find the node with the key
+        while (current && current.key!== key) {
+            if (key < current.key) {
+                current = current.left;
+            } else if (key > current.key) {
+                current = current.right;
+            } else {
+                return current; 
+            }
+        } 
+        return null;
+    }
+
+
+    /**
+     * 先序遍历
+     * 1. 访问根节点
+     * 2. 对根节点的左子树进行先序遍历
+     * 3. 对根节点的右子树进行先序遍历
+     * @param {Node} node
+     * @param {Function} handler
+     */
+    BinarySearchTree.prototype.preOrderTraverseNode = function(node, handler) {
+        if (node !== null) {
+            // settle the handler function
+            if (handler) {
+                // 处理每一个经过的节点
+                handler(node.key); 
+                // 对左子树进行先序遍历
+                this.preOrderTraverseNode(node.left, handler);
+                // 对右子树进行先序遍历
+                this.preOrderTraverseNode(node.right, handler);
+            }
+        }
+    }
+    BinarySearchTree.prototype.preOrderTraversal = function(handler) {
+        this.preOrderTraverseNode(this.root, handler);
+    }
+
+    /**
+     * 中序遍历
+     * 1. 对根节点的左子树进行中序遍历
+     * 2. 访问根节点
+     * 3. 对根节点的右子树进行中序遍历
+     * @param {Node} node
+     * @param {Node} node 
+     * @param {Function} handler 
+     */
+    BinarySearchTree.prototype.middleOrderTraverseNode = function(node, handler) {
+        if (node!== null) {
+            if (handler) {
+                // 对左子树进行中序遍历
+                this.middleOrderTraverseNode(node.left, handler);
+                // 处理每一个经过的节点
+                handler(node.key);
+                // 对右子树进行中序遍历
+                this.middleOrderTraverseNode(node.right, handler); 
+            }
+        }
+    }
+    BinarySearchTree.prototype.middleOrderTraversal = function(handler) {
+        this.middleOrderTraverseNode(this.root, handler); 
+    }
+
+    /**
+     * 后序遍历
+     * 1. 对根节点的左子树进行后序遍历
+     * 2. 对根节点的右子树进行后序遍历
+     * 3. 访问根节点
+     * @param {Node} node 
+     * @param {Function} handler 
+     */
+    BinarySearchTree.prototype.postOrderTraverseNode = function(node, handler) {
+        if (node!== null) {
+            if (handler) {
+                this.postOrderTraverseNode(node.left, handler);
+                this.postOrderTraverseNode(node.right, handler);
+                handler(node.key);
+            } 
+        } 
+    }
+    BinarySearchTree.prototype.postOrderTraversal = function(handler) {
+        this.postOrderTraverseNode(this.root, handler); 
+    }
+
+
+  /**
+   * remove node from the tree
+   * @param key
+   * @return {boolean}
+   */
+    BinarySearchTree.prototype.remove = function(key) {
+        let current = this.root;
+        let parent = null;
+        let isLeftChild = true;
+        // find the node with the key
+        // if the tree is empty, return false
+        while (current && current.key!== key) {
+            parent = current;
+            if (key < current.key) {
+                current = current.left;
+                isLeftChild = true;
+            } else if (key > current.key) {
+                current = current.right;
+                isLeftChild = false;
+            } else {
+                return false;
+            }
+        }
+        // remove leaf node
+        if (current.left === null && current.right === null) {
+            if /* 叶子节点为根节点 */ (current === this.root) {
+                this.root = null; 
+            } /* 叶子节点为左节点 */ else if (isLeftChild) {
+                parent.left = null; 
+            } /* 叶子节点为右节点 */ else {
+                parent.right = null;
+            }
+        }
+
+        // remove single child node
+        if (current.right === null) {
+            if (current === this.root) {
+                this.root = current.left; 
+            }
+            if (isLeftChild) {
+                parent.left = current.left;
+            } else {
+                parent.right = current.left;
+            }
+        } else if (current.left === null) {
+            if (current === this.root) {
+                this.root = current.right; 
+            }
+            if (isLeftChild) {
+                parent.left = current.right;
+            } else {
+                parent.right = current.right;
+            }
+        }
+
+        // remove double child node
+        if (current.left !== null && current.right !== null) {
+            if (current === this.root) {
+                this.root = current.right;
+                current.right.left = current.left; 
+            }
+            if (isLeftChild) {
+                //寻找到左子树的最大节点
+                let maxNode = current.left;
+                while (maxNode.right !== null) {
+                    maxNode = maxNode.right;
+                }
+                // 进行替换节点
+                parent.left = maxNode;
+                maxNode.right = current.right;
+                maxNode.left = current.left;
+            } else {
+                //寻找到右子树的最小节点
+                let minNode = current.right;
+                while (minNode.left !== null) {
+                    minNode = minNode.left;
+                }
+                // 进行替换节点
+                parent.right = minNode;
+                minNode.left = current.left;
+                minNode.right = current.right;
+            }
+        }
+        delete current;
+        return true;  // 删除成功
+    }
+
+  /**
+   * get height of the tree, 二叉树的效率取决于我们的树的深度
+   * @param node
+   * @return {number}
+   */
+    BinarySearchTree.prototype.getHeight = function(node) {
+        if (node === null) {
+            return 0;
+        }
+        return Math.max(this.getHeight(node.left), this.getHeight(node.right)) + 1;
+    }
+}
+```
+## algorithm 平衡二叉树
+* 主要是为了实现我们的二叉树的数据中根节点的选取至关重要吧
+* 根节点的选择，实现我们的保证树结构的平衡性的吧
+  * `AVL 树`也是一个保持平衡二叉树的一种方案吧
+  * `红黑树` 也是一个平衡二叉树的一种实现方案吧

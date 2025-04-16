@@ -1341,16 +1341,35 @@ Promise.race = function(promises) {
  * @param func 需要进行防抖的函数
  * @param delay 防抖函数执行的延迟时间
  */
-function debounce(func, delay) {
-    let timer = null  // 定义一个定时器
-    return function(...args) {
-        if (timer) {  // 如果定时器存在，则清除定时器
-            clearTimeout(timer)
-            timer = null  
-        }
-        timer = setTimeout(() => {  // 设置定时器
-            fn.apply(this, args)
-        }, delay)
+function debounce(func, delay = 3000, immediate = false) {
+    let timer = null
+    let is_executed = false
+    const _debounce = function(...args) {
+        return new Promise((resolve, reject) => {
+            try {
+                let res = null
+                if (timer) clearTimeout(timer)
+                if (immediate && !is_executed) {
+                    res = func.apply(this, args)
+                    is_executed = true
+                    resolve(res)
+                    return
+                }
+                timer = setTimeout(() => {
+                    res = func.apply(this, args)
+                    timer = null
+                    is_executed = false
+                    resolve(res)
+                }, delay)
+            } catch (err) {
+                reject(err)
+            }
+        })
+    }
+    _dubounce.cancel = function() {
+        clearTimeout(timer)
+        is_executed = false
+        timer = null
     }
 }
 ```
@@ -1363,15 +1382,43 @@ function debounce(func, delay) {
  * @param func 需要进行节流的函数
  * @param delay 节流的间隔
  */
-function throttle(func, delay) {
-    let currentTime = Date.now()  // 获取当前时间戳
-    return function(...args) {
-        let context = this, nowTime = Date.now()  // 获取当前时间戳
-        if (nowTime - currentTime >= delay) {  // 如果当前时间戳与上一次触发的时间戳之差大于等于间隔时间，则执行函数
-            currentTime = Date.now()  // 重新获取当前时间戳
-            return func.apply(context, args)
-        }
+function throttle(func, internal = 1000, isImmediate = false) {
+    let startTime = 0
+    let timer = null
+    const _throttle = function(...args) {
+        return new Promise((resolve, reject) => {
+            try {
+                let nowTime = new Date().getTime()
+                if (isImmediate === false && startTime === 0) {
+                    startTime = nowTime
+                }
+                if (nowTime - startTime >= internal) {
+                    if (timer) clearTimeout(timer)
+                    const res = func.apply(this, args)
+                    startTime = nowTime
+                    timer = null
+                    resolve(res)
+                }
+                
+                if (isImmediate && !timer) {
+                    timer = setTimeout(() => {
+                        const res = func.apply(this, args)
+                        startTime = new Date().getTime()
+                        timer = null
+                        resolve(res)
+                    }, internal)
+                }
+            } catch (err) {
+                reject(err)
+            }
+        })
     }
+    _throttle.cancel = function() {
+        clearTimeout(timer)
+        startTime = 0
+        timer = null
+    }
+    return _throttle
 }
 ```
 
