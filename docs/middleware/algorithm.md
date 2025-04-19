@@ -1,4 +1,6 @@
 # algorithm 文档
+> * 简历: 我精通红黑树，图结构😥😥😥【真的精通吗？？？🤔🤔🤔】
+> * 头发掉光光，呜呜呜
 
 ## algorithm 数据结构是什么呐？？🤔🤔
 * 实际上现在的开发中基本上都是进行的是对我们的数据的增删改查吧，任何的数据都是通过我们的数据结构进行统一管理起来的呐
@@ -1356,3 +1358,509 @@ function BinarySearchTree() {
 * 根节点的选择，实现我们的保证树结构的平衡性的吧
   * `AVL 树`也是一个保持平衡二叉树的一种方案吧
   * `红黑树` 也是一个平衡二叉树的一种实现方案吧
+
+## algorithm 红黑树
+### 认识红黑树
+* `节点是红色或者说黑色`
+* `根节点是黑色`
+* 每个叶子节点都是`黑色的空节点`
+* 每个红色节点的两个子节点都是黑色
+* 从任意节点到其叶子节点的所有路径都包含相同数目的黑色节点
+
+![](/img_44.png)
+
+### 红黑树的变换
+* 也就是我们的树结构中的颜色变化吧
+* 红黑树的变化的话具备我们的
+  * 换色 --> 左旋转 --> 右旋转
+    * `左旋转`就是我们的`逆时针`旋转吧，具备的子节点进行平移即可
+    * `右旋转`就是我们的`顺时针`旋转吧，具备的子节点进行平移即可
+* 为了符合我们的红黑树的基本规则，这个时候需要进行我们的红黑色的变换吧
+* 一般的话我们的`插入的新的节点的话一般是我们的红色`吧
+  * 名称约束
+    * 新插入的节点称之为: `N` -- New
+    * 插入的新节点对应的父节点: `P` -- Parent
+    * 插入的新节点对应的祖父节点: `G` -- GrandParent
+    * 插入的新节点对应的叔叔节点: `U` -- Uncle
+* 只能说，十分的难，这里就不写代码了，草！！！
+  * 变化的规则一共五种，`难崩`
+  * 背都背不住，还写代码，梦呐，呜呜呜😭😭😭
+
+## algorithm 图结构
+### 认识图结构
+* 图结构和我们的树结构是十分相似的呐
+* 主要是研究`顶点`和`边`组成的数学理论和方法
+  * `顶点`代表一个一个的`事物`，`边`代表每个事物之间的`关系`
+  * 人与人之间的关系网 
+
+### 图的相关术语
+* `顶点`：图中的一个点，可以有任意数量的顶点。
+* `相邻顶点`: 与当前顶点相邻的顶点。
+* `边`：顶点之间连接的线或弧，可以有任意数量的边。
+* `路径`：顶点之间连接的边序列，称为路径。
+* `图`：由顶点和边组成的数学对象。
+* `无向图`：图中的边没有方向，即边是双向的。
+* `有向图`：图中的边有方向，即边是单向的。
+* `度`: 相邻顶点数量。
+* `连通图`：图中的任意两个顶点之间都存在路径。
+* `连通分量`：连通图的子集，其中每个子集都是连通的。
+* `无权图`：图中的边没有权重。
+* `带权图`：图中的边有权重。
+
+### 图的表示方法
+* `邻接矩阵`的表示方法，主要是通过我们的二维数组来表示我们的图结构的呐
+* `邻接表` 的表示方法，主要是通过我们的链表来表示我们的图结构的呐
+
+### 图的遍历算法
+* 每一个顶点对应的邻接表，使用我们的映射表来进行存储吧
+* 广度优先搜索
+  * `Breadth-first search (BFS)`
+  * 实现的是一直遍历到尾即可，直到没有任何的子节点的时候直接退出即可
+* 深度优先搜索
+  * `Depth-first search (DFS)`
+  * 实现的是确保每个通路全部遍历完，否则就不退出，退出的标志是重新回归到我们的初始位置吧
+* 进行实现我们的遍历的时候，首先需要指定初始节点吧
+* 每个节点内部保存的状态设置
+  * 没有被访问过的状态 -- '0'
+  * 被访问过的状态，但是没有被探索过 -- '1'
+  * 被访问过的状态，并且被探索过的状态  -- '2'
+```javascript
+function Dict() {
+    //todo: define property
+    this.data = {};  // map also can use
+    //todo: define methods
+    Dict.prototype.set = function (key, value) {
+        this.data[key] = value;
+    }
+    Dict.prototype.get = function (key) {
+        return this.data[key];
+    }
+    Dict.prototype.remove = function (key) {
+        delete this.data[key];
+    }
+    Dict.prototype.has = function (key) {
+        return this.data.hasOwnProperty(key);
+    }
+    Dict.prototype.size = function () {
+        return Object.keys(this.data).length;
+    }
+    Dict.prototype.clear = function () {
+        this.data = {};
+    }
+    Dict.prototype.keys = function () {
+        return Object.keys(this.data);
+    }
+}
+
+function Queue() {
+    //todo: define property
+    this.data = [];  // 存储队列元素的数组
+    //todo: define methods
+    /**
+     * 入队
+     * @param {*} element
+     */
+    Queue.prototype.enqueue = function (element) {
+        this.data.push(element);  // 向数组的末尾添加元素 
+    } 
+    /**
+     * 出队
+     * @returns {*}
+     */
+    Queue.prototype.dequeue = function () {
+        return this.data.shift();  // 从数组的开头删除元素
+    }
+    /**
+     * 查看队列的第一个元素
+     * @returns {*}
+     */
+    Queue.prototype.front = function () {
+        return this.data[0];  // 返回数组的第一个元素 
+    }
+    /**
+     * 查看队列是否为空
+     * @returns {boolean}
+     */
+    Queue.prototype.isEmpty = function () {
+        return this.data.length === 0;  // 返回数组的长度是否为0
+    }
+    /**
+     * 查看队列的大小
+     * @returns {number}
+     */
+    Queue.prototype.size = function () {
+        return this.data.length;  // 返回数组的长度
+    }
+    /**
+     * 清空队列
+     */
+    Queue.prototype.clear = function () {
+        this.data = [];  // 将数组的长度设置为0
+    }
+    /**
+     * 打印队列
+     */
+    Queue.prototype.toString = function () {
+        let str = '';  // 定义一个字符串变量，用于存储队列的元素
+        for (let i = 0; i < this.data.length; i++) {  // 遍历数组
+            str += this.data[i] + " ";  // 将数组的元素添加到字符串中
+        }
+        return str;  // 返回字符串
+    }
+    Queue.prototype.print = function () {
+        console.log(this.data.toString());  // 将数组转换为字符串并打印 
+    }
+}
+
+function Graph() {
+    //todo: define properties
+    this.vertices = [];  // 顶点数组
+    this.edges = new Dict();  // 边数组
+
+    //todo: define methods
+    /**
+     * 定义顶点
+     * @param {*} vectex 
+     */
+    Graph.prototype.addVartex = function (vectex) {
+        this.vertices.push(vectex);
+        this.edges.set(vectex, []);  // 初始化边数组
+    }
+
+    /**
+     * 定义边
+     * @param {*} vectex1 
+     * @param {*} vectex2 
+     */
+    Graph.prototype.addEage = function (vectex1, vectex2) {
+        this.edges.get(vectex1).push(vectex2);  // 向边数组中添加边
+        this.edges.get(vectex2).push(vectex1);  // 向边数组中添加边
+    }
+
+    /**
+     * 打印图
+     */
+    Graph.prototype.toString = function () {
+        let str = ''; 
+        for (let i = 0; i < this.vertices.length; i++) {  // 遍历顶点数组
+            str += this.vertices[i] + " -> "  // 打印顶点
+            let neighbors = this.edges.get(this.vertices[i]);  // 获取边数组
+            for (let j = 0; j < neighbors.length; j++) {  // 遍历边数组
+                str += neighbors[j] + " ";  // 打印边
+            }
+            str += "\n";  // 换行
+        }
+        return str;
+    }    
+
+    /**
+     * 初始化顶点状态
+     * '0' 未被访问
+     * '1' 被访问，但是未探索
+     * '2' 被访问，并且被探索
+     */
+    Graph.prototype.initState = function () {
+        let states = []  // 存储顶点的状态
+        for (let i = 0; i < this.vertices.length; i++) {  // 遍历顶点数组
+            states[this.vertices[i]] = '0';  // 初始化顶点的状态，和顶点数组的索引对应
+        }
+        return states;  // 返回顶点的状态
+    }
+
+    /**
+     * 广度优先搜索
+     * @param {*} initVectex 
+     * @param {*} callback 
+     */
+    Graph.prototype.bfs = function (initVectex, callback) {
+        let states = this.initState();  // 初始化顶点状态
+        let queue = new Queue();  // 创建队列
+        queue.enqueue(initVectex);  // 将初始顶点入队
+        while (!queue.isEmpty()) {  // 当队列不为空时
+            let vectex = queue.dequeue();  // 出队
+            let neighbors = this.edges.get(vectex);  // 获取边数组
+            states[vectex] = '1';  // 将顶点的状态设置为1
+            for (let i = 0; i < neighbors.length; i++) {  // 遍历边数组
+                let n = neighbors[i];  // 获取边数组的元素
+                if (states[n] === '0') {  // 如果顶点的状态为0
+                    states[n] = '1';  // 将顶点的状态设置为1
+                    queue.enqueue(n);  // 将顶点入队
+                }    
+                callback(vectex, n);  // 调用回调函数
+                states[vectex] = '2';  // 将顶点的状态设置为2
+            }    
+        }    
+    }
+
+    /**
+     * 深度优先搜索
+     * @param {*} initVectex
+     * @param {*} callback
+     */
+    Graph.prototype.dfs = function (initVectex, callback) {
+        let states = this.initState();  // 初始化顶点状态
+        this.dfsVisit(initVectex, states, callback);  // 调用dfsVisit方法 
+    }
+    /**
+     * 递归调用dfsVisit方法
+     * @param {*} vectex
+     * @param {*} states
+     * @param {*} callback
+     */
+    Graph.prototype.dfsVisit = function (vectex, states, callback) {
+        states[vectex] = '1';  // 将顶点的状态设置为1
+        let neighbors = this.edges.get(vectex);  // 获取边数组
+        for (let i = 0; i < neighbors.length; i++) {  // 遍历边数组
+            let n = neighbors[i];  // 获取边数组的元素
+            if (states[n] === '0') {  // 如果顶点的状态为0
+                this.dfsVisit(n, states, callback);  // 递归调用
+            }
+            callback(vectex, n);  // 调用回调函数
+            states[vectex] = '2';  // 将顶点的状态设置为2
+        } 
+    }
+}
+```
+
+## algorithm 排序算法
+
+### 冒泡排序
+* 最低最稳定的排序算法
+* 时间复杂度为: O(n^2)
+  * 实现思路为: 
+    * 第一层循环决定比较次数
+    * 第二层循环进行排序规则的定义
+```javascript
+//外部自定义排序函数
+function bubbleSort(arr, callback) {
+    for (let i = 0; i < arr.length; i++) {  // 排序论数
+        for (let j = 0; j < arr.length - i - 1; j++) {  // 比较次数
+            let flag = false;
+            if (callback(arr[j], arr[j + 1])) {
+                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+                flag = true;
+            }
+        }
+        if (!flag) {
+            break;
+        }
+    }
+}
+function descSort(a, b) {
+    return a > b;
+}
+function ascSort(a, b) {
+    return a < b;
+}
+```
+
+```typescript
+type CallbackType = <T>(arr: T[], a: T, b: T) => boolean;
+
+function swap(arr: number[], i: number, j: number) {
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+}
+
+function bubbleSort(arr: number[], callback: CallbackType<number>) {
+  for (let i = 0; i < arr.length; i++) {  // 排序论数
+    for (let j = 0; j < arr.length - i - 1; j++) {  // 比较次数
+      let flag = false;
+      if (callback(arr, j, j + 1)) {
+        swap(arr, j, j + 1)
+        flag = true;
+      }
+    }
+    if (!flag) {
+      break;
+    }
+  }
+}
+
+function descSort(arr: number[], a: number, b: number): CallbackType<number> {
+    return arr[a] > arr[b];
+}
+function ascSort(arr: number[], a: number, b: number): CallbackType<number> {
+    return arr[a] < arr[b];
+}
+```
+
+### 选择排序
+* 选择排序的效率是十分高的呐
+* 时间复杂度为: O(n^2)
+* 实现思路
+  * 选定一个索引位置，然后和后面的元素进行一次比较
+  * 如果后面的元素小于前面的元素，那么就将后面的元素和前面的元素进行交换
+  * 循环结束后，就找到了最小的元素，然后将最小的元素和第一个元素进行交换
+  * 循环结束后，就找到了最大的元素，然后将最大的元素和最后一个元素进行交换
+```typescript
+function selectionSort(arr: number[]) {
+  for (let i = 0; i < arr.length; i++) {
+    let index = i;
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[index] > arr[j]) {
+        index = j
+      }
+    }
+    if (index !== i) {
+      [arr[i], arr[index]] = [arr[index], arr[i]]
+    }
+  }
+}
+```
+
+### 插入排序
+* 插入排序的效率十分的高
+* 时间复杂度为: O(n^2)
+* 实现思路
+  * 局部有序性
+    * 对于插入排序而言的话，局部越有序，时间复杂度越低
+  * 从第一个元素开始，该元素已经被认为是局部有序的了
+  * 获取下一个元素，在已经排序了的元素后直接进行向前扫描
+  * 如果当前元素小于等于已经排序的元素，那么就将当前元素插入到已经排序的元素后面
+```typescript
+function insertionSort(arr: number[]) {
+    for (let i = 1; i < arr.length; i++) {
+        let temp = arr[i];
+        //todo core code
+        let j = i
+        while (arr[j - 1] > temp && j > 0) {
+            arr[i] = arr[j - 1]
+            j--
+        }
+        arr[j] = temp
+    }
+    return arr
+}
+```
+
+### 希尔排序
+* 希尔排序是插入排序的改进版
+* 希尔排序的时间复杂度为: O(n^2)
+* 实现思路
+  * 选择间隔序列
+  * 分组排序
+  * 缩小间隔
+  * 最终排序
+```typescript
+function shellSort(arr: number[]): void {
+    let n = arr.length;
+    let gap = Math.floor(n / 2);
+    while (gap > 0) {
+        for (let i = gap; i < n; i++) {
+            let temp = arr[i];
+            let j = i;
+            while (j >= gap && arr[j - gap] > temp) {
+                arr[j] = arr[j - gap];
+                j -= gap;
+            }
+            arr[j] = temp;
+        }
+        // 缩小间隔
+        gap = Math.floor(gap / 2);
+    }
+}
+```
+
+### 归并排序
+* 归并排序是分治算法的一种
+* 时间复杂度为: O(nlogn)
+* 实现思路
+  * 分解：递归地将数组分成两个子数组，直到每个子数组的长度为1
+  * 合并：将两个有序的子数组合并成一个有序的数组
+```typescript
+function mergeSort(arr: number[]): number[] {
+    if (arr.length <= 1) {
+        return arr;
+    }
+
+    // 找到中间位置
+    const mid = Math.floor(arr.length / 2);
+
+    // 递归地对左右子数组进行排序
+    const left = mergeSort(arr.slice(0, mid));
+    const right = mergeSort(arr.slice(mid));
+
+    // 合并两个有序的子数组
+    return merge(left, right);
+}
+
+function merge(left: number[], right: number[]): number[] {
+    let result: number[] = [];
+    let leftIndex = 0;
+    let rightIndex = 0;
+
+    // 比较两个子数组的元素，将较小的元素放入结果数组中
+    while (leftIndex < left.length && rightIndex < right.length) {
+        if (left[leftIndex] < right[rightIndex]) {
+            result.push(left[leftIndex]);
+            leftIndex++;
+        } else {
+            result.push(right[rightIndex]);
+            rightIndex++;
+        }
+    }
+
+    // 将剩余的元素放入结果数组中
+    return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
+}
+```
+
+### 快速排序
+```typescript
+function quickSort(arr: number[], left: number = 0, right: number = arr.length - 1): void {
+    if (left < right) {
+        // 获取分区点
+        const pivotIndex = partition(arr, left, right);
+        // 对左子数组进行快速排序
+        quickSort(arr, left, pivotIndex - 1);
+        // 对右子数组进行快速排序
+        quickSort(arr, pivotIndex + 1, right);
+    }
+}
+
+function partition(arr: number[], left: number, right: number): number {
+    // 选择最右边的元素作为基准
+    const pivot = arr[right];
+    let i = left - 1;
+
+    for (let j = left; j < right; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            [arr[i], arr[j]] = [arr[j], arr[i]]; // 交换元素
+        }
+    }
+
+    // 将基准元素放到正确的位置
+    [arr[i + 1], arr[right]] = [arr[right], arr[i + 1]];
+    return i + 1;
+}
+```
+
+### 基数排序
+```typescript
+function radixSort(arr: number[]): number[] {
+    if (arr.length === 0) return arr;
+    // 找到数组中的最大值，确定最大位数
+    const max = Math.max(...arr);
+    const maxDigits = max.toString().length;
+    // 从最低位到最高位进行排序
+    for (let digit = 0; digit < maxDigits; digit++) {
+        // 创建10个桶，用于存储每一位的数字
+        const buckets: number[][] = Array.from({ length: 10 }, () => []);
+        // 将数组中的每个数字放入对应的桶中
+        for (const num of arr) {
+            // 获取当前位的数字
+            const digitValue = Math.floor((num / Math.pow(10, digit)) % 10);
+            buckets[digitValue].push(num);
+        }
+        // 将桶中的数字按顺序放回数组
+        let index = 0;
+        for (const bucket of buckets) {
+            for (const num of bucket) {
+                arr[index++] = num;
+            }
+        }
+    }
+    return arr;
+}
+```

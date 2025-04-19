@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: "Juwenzhang"
-  tagline: "努力学习，持续进步"
+  tagline: "每个技术的出现都是对以往出现的问题的一个新的解决方案，保持好奇心，持续学习下去，或许我很普通，但是这些都是外在因素"
   image:
     src: /icon.png
     alt: 背景图
@@ -51,4 +51,7 @@ features:
   - title: 前端其他知识
     details: webWorker webSocket observer 打包工具 前端工程化
     link: /other/other.md
+  - title: 刷题
+    details: leetCode algorithm
+    link: /algorithm/algorithm.md
 ---
