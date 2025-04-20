@@ -54,4 +54,7 @@ features:
   - title: 刷题
     details: leetCode algorithm
     link: /algorithm/algorithm.md
+  - title: 场景题
+    details: playground
+    link: /playground/playground.md
 ---
