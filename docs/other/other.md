@@ -379,3 +379,61 @@ window.addEventListener('click', (event) => {
 >     * A-animated: 动画
 >     * I-idle: 空闲
 >     * L-load: 加载
+
+## JWT 机制
+* JWT(JSON Web Token)，即 JSON 令牌，是一种用于在网络应用间传递数据的开放标准（RFC 7519）。JWT 可以使用密钥或使用数字签名进行签名。
+* 主要是应用于我们的一个前后端分离的形式吧，实现取代了我们的 session-cookie 机制的一种实现方式吧
+
+### 传统的session认证机制
+* 客户端通过携带 cookie 信息来实现我们的携带用户信息
+* 服务器获取得到了具体的 cookie 信息后，我们就可以通过我们的 session 来获取到对应的用户信息
+* 基本的实现形式的话就是
+  * 客户端向服务器发送一个认证请求
+  * 服务端进行该用户信息返回对应的 cookie_id
+  * 随后的请求的话，客户端会自动地携带上该 cookie 信息吧
+  * 实现服务器对客户端信息的识别吧
+* 但是该用户信息是存储在我们的服务端的，具备服务器的内存消耗，带宽消耗大，不适合我们的集群开发吧
+  * 主要是需要在我们的请求和API网官进行对应的处理吧
+
+### jwt 认证机制
+* 客户端向服务端发送一个认证请求
+* 服务端根据客户端发送的一些信息，生成对应的 token 令牌
+* 客户端获取得到了 token ，实现存储在本地
+* 客户端在后续的每次请求的话都会携带上该 token 信息给服务端进行校验
+* 检验通过直接服务端响应数据吧
+* token 的话是存储于我们的客户端的，大大的减少了服务端的内存消耗
+  * 同时 token 信息的话颁发token 的信息码是在服务端存储的
+  * 真真的 token 令牌在我们的 客户端本地进行存储的呐
+* token 服务端的颁发的话具备的算法具备
+  * `对称加密`
+  * `非对称加密`
+  * `混合加密`
+* 客户端进行存储 token 信息，这样就大大减少了服务器的带宽，适合做我们的服务器集群开发吧
+* 客户端通过我们的 `localStorage` 或者 `sessionStorage` 来进行存储
+* 客户端通过 `atob` 来进行解码，获取到对应的 token 信息
+
+## JWT 基本结构
+* JWT 由三部分组成
+  * `header`
+    * 存储令牌的类型 `JWT` 
+    * 生成令牌所使用的签名算法 `HS256` | `RS256` 等等
+    * 最后使用 Base64 的形式实现我们的 token 组织吧
+  * `payload`
+    * 用于实现的是存储用户的具体的信息的字符串，base64 编码
+  * `signature`
+    * 使用编码后的 header 和 payload 以及后端的一个`密钥`进行签名，然后进行base64编码
+    * 进行签名的时候使用的是我们的 header 信息中指定的签名算法
+    * 进行签名的目的是为了`确保token的完整性和真实性`
+    * 密钥是`服务端`自己进行指定的，开源的话使用 openssl 来进行生成即可吧
+* header 和 payload 中一定不要进行存储铭感信息吧
+  * 一般实现的是传递一些非铭感的信息吧
+* 生成的token形式的话是: `header.payload.signature`
+```textmate
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0
+.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30
+```
+* 上面的例子就具备了我们的一些信息
+  * 第一部分就是我们的 header 部分信息
+  * 第二部分就是我们的 payload 部分信息
+  * 第三部分就是我们的 signature 部分信息
