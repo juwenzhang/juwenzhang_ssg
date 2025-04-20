@@ -530,3 +530,245 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 ```
+
+## 上拉加载和下拉刷新
+* 上拉加载实现原理
+  * 主要是监听的是视口的滚动实现来完成的吧
+  * 在页面中呈现的话使用的是 数组来进行呈现的吧
+```javascript
+class PullToLoadMore {
+    constructor(containerId, listId, loadMoreCallback) {
+        this.container = document.getElementById(containerId);
+        this.list = document.getElementById(listId);
+        this.loadMoreCallback = loadMoreCallback;
+        // 设置一个阈值
+        this.threshold = 50;
+    }
+    init() {
+        this.container.addEventListener('scroll', () => {
+            if (this.container.scrollTop + this.container.clientHeight >= this.list.scrollHeight - this.threshold) {
+                this.loadMoreCallback();
+                console.log('加载更多');
+                setTimeout(() => {
+                    this.list.scrollTop = this.list.scrollHeight;
+                    console.log('滚动到底部');
+                    this.loadMore()
+                })
+            } else {
+                console.log('没有加载更多');
+            }
+        })
+    }
+    loadMore() {
+        this.loadMoreCallback();
+    }
+}
+```
+* 下拉刷新实现原理
+  * 就是实现的是监听页面的点击或者说触摸事件吧
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下拉刷新示例</title>
+    <style>
+        #refresh-tip {
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+            display: none;
+        }
+
+        #content {
+            min-height: 200vh;
+        }
+    </style>
+</head>
+
+<body>
+<div id="refresh-tip">释放刷新...</div>
+<div id="content">
+    <!-- 页面内容 -->
+    <p>这里是页面内容...</p>
+</div>
+<script>
+    const refreshTip = document.getElementById('refresh-tip');
+    const content = document.getElementById('content');
+    let startY = 0;
+    let isDragging = false;
+    const refreshDistance = 50; // 下拉触发刷新的距离
+
+    // 触摸开始事件
+    content.addEventListener('touchstart', (e) => {
+        if (window.pageYOffset === 0) {
+            startY = e.touches[0].clientY;
+            isDragging = true;
+        }
+    });
+
+    // 触摸移动事件
+    content.addEventListener('touchmove', (e) => {
+        if (isDragging) {
+            const currentY = e.touches[0].clientY;
+            const distance = currentY - startY;
+            if (distance > 0) {
+                e.preventDefault(); // 阻止默认滚动行为
+                refreshTip.style.display = 'block';
+                // 模拟下拉效果
+                content.style.transform = `translateY(${distance}px)`;
+                if (distance >= refreshDistance) {
+                    refreshTip.textContent = '释放刷新...';
+                } else {
+                    refreshTip.textContent = '下拉刷新...';
+                }
+            }
+        }
+    });
+
+    // 触摸结束事件
+    content.addEventListener('touchend', () => {
+        if (isDragging) {
+            const contentStyle = window.getComputedStyle(content);
+            const translateY = parseInt(contentStyle.transform.replace('translateY(', '').replace('px)', ''));
+            if (translateY >= refreshDistance) {
+                // 执行刷新操作
+                refreshTip.textContent = '刷新中...';
+                // 模拟刷新耗时
+                setTimeout(() => {
+                    refreshTip.style.display = 'none';
+                    content.style.transform = 'translateY(0)';
+                    // 这里可以添加实际的刷新逻辑，如重新加载数据
+                    alert('刷新完成');
+                }, 2000);
+            } else {
+                refreshTip.style.display = 'none';
+                content.style.transform = 'translateY(0)';
+            }
+            isDragging = false;
+        }
+    });
+</script>
+</body>
+
+</html>
+```
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>桌面端下拉刷新示例</title>
+    <style>
+        #refresh-tip {
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+            display: none;
+        }
+
+        #content {
+            min-height: 200vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="refresh-tip">释放刷新...</div>
+    <div id="content">
+        <!-- 页面内容 -->
+        <p>这里是页面内容...</p>
+    </div>
+    <script>
+        const refreshTip = document.getElementById('refresh-tip');
+        const content = document.getElementById('content');
+        let isDragging = false;
+        let startY = 0;
+        const refreshDistance = 50;
+
+        content.addEventListener('mousedown', (e) => {
+            if (window.pageYOffset === 0) {
+                startY = e.clientY;
+                isDragging = true;
+            }
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                const currentY = e.clientY;
+                const distance = currentY - startY;
+                if (distance > 0) {
+                    e.preventDefault();
+                    refreshTip.style.display = 'block';
+                    content.style.transform = `translateY(${distance}px)`;
+                    if (distance >= refreshDistance) {
+                        refreshTip.textContent = '释放刷新...';
+                    } else {
+                        refreshTip.textContent = '下拉刷新...';
+                    }
+                }
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (isDragging) {
+                const contentStyle = window.getComputedStyle(content);
+                const translateY = parseInt(contentStyle.transform.replace('translateY(', '').replace('px)', ''));
+                if (translateY >= refreshDistance) {
+                    refreshTip.textContent = '刷新中...';
+                    setTimeout(() => {
+                        refreshTip.style.display = 'none';
+                        content.style.transform = 'translateY(0)';
+                        alert('刷新完成');
+                    }, 2000);
+                } else {
+                    refreshTip.style.display = 'none';
+                    content.style.transform = 'translateY(0)';
+                }
+                isDragging = false;
+            }
+        });
+    </script>
+</body>
+
+</html>
+```
+* 节流防抖的性能优化
+* 视觉反馈的性能优化
+* 平滑动画的实现
+* 错误上报的处理
+
+## 小程序双线程模型
+* 逻辑层 App Service
+  * 运行在 javascriptCore 中，主要是负责小程序的业务逻辑的开发
+  * 数据的处理，时间的处理，动画的绘制，页面的渲染，网络请求的设置
+  * 不能直接操作视图，需要通过我们的通信机制来实现吧
+* 渲染层 View
+  * 运行在 webView 中
+  * 接收逻辑层的一些 ui 更新指令
+  * 每个页面具备独立的 webView 实现多进程的渲染多页面吧
+* 实现的时候
+  * 分离业务逻辑和渲染逻辑
+  * 更新 ui 通过异步的方式实现
+  * 并行页面处理，提升切换速度吧
+
+## 图片性能加载优化
+* loading img 中的一个属性设置: `loading="lazy"`
+* `intersection observer API` 监听图片是否进入可视区域，然后进行加载, polyfill 处理
+* 通过滚动实现实现，十分的原始的做法
+* 使用第三方轮子: `lazyload` `lazysize`
+
+## DNS 协议的理解
+* DNS 协议实现的是就是将域名映射到我们的 ip地址上
+
+## 算法
+* `排序算法`
+  * sort 使用的就是合并排序算法
+* `搜索算法`
+* `动态规划算法`
+* `贪心算法`
+* `递归算法`
